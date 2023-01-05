@@ -115,8 +115,9 @@ namespace ByteBank
                 saldos[indexParaDeposito] += valorDeposito;
                     
 
-                Console.WriteLine($"Depósito de R$ {valorDeposito:F2} feito com succeso");
-                Console.WriteLine($"CPF = {cpfs[indexParaDeposito]} | Titular = {titulares[indexParaDeposito]} | Saldo = R${saldos[indexParaDeposito]:F2}");
+                Console.WriteLine($"Depósito de R$ {valorDeposito:F2} feito com sucesso");
+                Console.WriteLine($"CPF = {cpfs[indexParaDeposito]} | Titular = {titulares[indexParaDeposito]} | Novo Saldo = R${saldos[indexParaDeposito]:F2}");
+                Console.WriteLine();
             }
         }
         static void Saque(List<string> cpfs, List<string> titulares, List<double> saldos)
@@ -138,17 +139,61 @@ namespace ByteBank
                 saldos[indexParaSaque] -= valorSaque;
 
 
-                Console.WriteLine($"Saque de R$ {valorSaque:F2} feito com succeso");
-                Console.WriteLine($"CPF = {cpfs[indexParaSaque]} | Titular = {titulares[indexParaSaque]} | Saldo = R${saldos[indexParaSaque]:F2}");
+                Console.WriteLine($"Saque de R$ {valorSaque:F2} feito com sucesso");
+                Console.WriteLine($"CPF = {cpfs[indexParaSaque]} | Titular = {titulares[indexParaSaque]} | Novo Saldo = R${saldos[indexParaSaque]:F2}");
+                Console.WriteLine();
             }
         }
-        /*  em desenvolvimento
+        
+
+
+
+
         static void Transferencia(List<string> cpfs, List<string> titulares, List<double> saldos)
             {
-            
-            }
-        */
+            Console.WriteLine();
+            Console.Write("Digite o CPF da conta que vai Transferir:");
 
+            string cpfEnviaTrasferencia = Console.ReadLine();
+            int indexEnviaTransferencia = cpfs.FindIndex(cpf => cpf == cpfEnviaTrasferencia);
+
+            Console.WriteLine();
+            Console.Write("Digite o CPF da conta que vai receber a Transferência:");
+
+            string cpfRecebeTrasferencia = Console.ReadLine();
+            int indexRecebeTransferencia = cpfs.FindIndex(cpf => cpf == cpfRecebeTrasferencia);
+
+
+            if (indexEnviaTransferencia == -1)
+            {
+                Console.WriteLine("CPF não encontrado/escolha a opção desajada novamente:");
+            }
+            else if (indexEnviaTransferencia == -1)
+            {
+                Console.WriteLine("CPF não encontrado/escolha a opção desajada novamente:");
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.Write("Digite o valor da transferência: R$");
+                double valorTransferencia = int.Parse(Console.ReadLine());
+                saldos[indexEnviaTransferencia] -= valorTransferencia;
+                saldos[indexRecebeTransferencia] += valorTransferencia;
+
+                Console.WriteLine();
+                Console.WriteLine($"Transferência de R$ {valorTransferencia:F2} feito com sucesso");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("status de quem enviou");
+            Console.WriteLine($"CPF = {cpfs[indexEnviaTransferencia]} | Titular = {titulares[indexEnviaTransferencia]} | Novo Saldo = R${saldos[indexEnviaTransferencia]:F2}");
+            Console.WriteLine();
+            Console.WriteLine("status de quem recebeu");
+            Console.WriteLine($"CPF = {cpfs[indexRecebeTransferencia]} | Titular = {titulares[indexRecebeTransferencia]} | Novo Saldo = R${saldos[indexRecebeTransferencia]:F2}");
+            Console.WriteLine();
+
+        }
+        
 
         public static void Main(string[] args)
         {
@@ -167,7 +212,7 @@ namespace ByteBank
             {
                 MostrarMenu();
                 opcao = int.Parse(Console.ReadLine());
-
+                
                 Console.WriteLine("-----------------");
 
                 switch (opcao)
@@ -205,10 +250,9 @@ namespace ByteBank
                                 case 2:
                                     Saque(cpfs, titulares, saldos);
                                     break;
-                               /* case 3:
+                                case 3:
                                     Transferencia(cpfs, titulares, saldos);
                                     break;
-                               */
                                 case 4:
                                     Console.WriteLine("Finalizando o programa");
                                     return;
