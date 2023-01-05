@@ -32,20 +32,28 @@ namespace ByteBank
 
         static void DeletarUsuario(List<string> cpfs, List<string> titulares, List<double> saldos, List<string> senhas)
         {
-            Console.Write("Escreva o CPF do titular que você quer deletar: ");    
+            Console.WriteLine();
+            Console.Write("Escreva o CPF do titular que você quer deletar: ");
             string cpfParaDeletar = Console.ReadLine();
+            Console.WriteLine();
             int indexParaDeletar = cpfs.FindIndex(cpf => cpf == cpfParaDeletar);
             cpfs.Remove(cpfParaDeletar);
-            
+
             if (indexParaDeletar == -1)
             {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("CPF não encontrado/não foi possível deletar usuário");
+                Console.ResetColor();
             }
-            Console.WriteLine("CPF deletado com sucesso!");
-            titulares.RemoveAt(indexParaDeletar);
-            senhas.RemoveAt(indexParaDeletar);
-            saldos.RemoveAt(indexParaDeletar);
-           
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("CPF deletado com sucesso!");
+                titulares.RemoveAt(indexParaDeletar);
+                senhas.RemoveAt(indexParaDeletar);
+                saldos.RemoveAt(indexParaDeletar);
+            }
         }
 
         static void ListarTodasAsContas(List<string> cpfs, List<string> titulares, List<double> saldos)
@@ -54,8 +62,10 @@ namespace ByteBank
             for (int i = 0; i < cpfs.Count; i++)
             {
                 ApresentaConta(i, cpfs, titulares, saldos);
+                Console.WriteLine();
             }
-        } // vou adicionar esse }
+        } 
+
             static void ApresentarUsuario(List<string> cpfs, List<string> titulares, List<double> saldos)
             {
                 Console.Write("Escreva o CPF do titular que você quer pesquisar: ");
@@ -64,36 +74,43 @@ namespace ByteBank
 
                 if (indexParaApresentar == -1)
                 {
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("CPF não encontrado/não foi possível apresentar essa conta");
-                }
+                    Console.ResetColor();
+            }
                 else
                 {
+                    Console.WriteLine();
                     ApresentaConta(indexParaApresentar, cpfs, titulares, saldos);
-                }
+                    Console.WriteLine();
+            }
             }
 
             static void ApresentarValorTotalNoBanco(List<double> saldos)
             {
-            Console.WriteLine($"O total acumulado no banco é de: R$ {saldos.Sum():F2}");    
-            
-            }
+                Console.WriteLine();
+                Console.WriteLine($"O total acumulado no banco é de: R$ {saldos.Sum():F2}");
+                Console.WriteLine();
+        }
 
             static void ApresentaConta(int index, List<string> cpfs, List<string> titulares, List<double> saldos)
             {
+                Console.WriteLine();
                 Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R${saldos[index]:F2}");
             }
         
 
         static void MenuSecundario()
         {
+            
             Console.WriteLine("0 - voltar para o menu principal");
             Console.WriteLine("1 - fazer depósito");
             Console.WriteLine("2 - fazer saque");
             Console.WriteLine("3 - fazer transferência");
             Console.WriteLine("4 - sair do programa");
-
+            Console.WriteLine();
             Console.Write("Digite a opção desejada: ");
-
         }
 
         static void Deposito(List<string> cpfs, List<string> titulares, List<double> saldos)
@@ -106,20 +123,26 @@ namespace ByteBank
 
             if (indexParaDeposito == -1)
             {
-                Console.WriteLine("CPF não encontrado/escolha a opção desajada novamente:");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("CPF não encontrado/escolha a opção desejada novamente:");
+                Console.ResetColor();
             }
             else
             {
+                Console.WriteLine();
                 Console.Write("Digite o valor do depósito: R$");
                 double valorDeposito = int.Parse(Console.ReadLine());
                 saldos[indexParaDeposito] += valorDeposito;
-                    
 
+                Console.WriteLine();
                 Console.WriteLine($"Depósito de R$ {valorDeposito:F2} feito com sucesso");
+                Console.WriteLine();
                 Console.WriteLine($"CPF = {cpfs[indexParaDeposito]} | Titular = {titulares[indexParaDeposito]} | Novo Saldo = R${saldos[indexParaDeposito]:F2}");
                 Console.WriteLine();
             }
         }
+        
         static void Saque(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
             Console.WriteLine();
@@ -130,24 +153,25 @@ namespace ByteBank
 
             if (indexParaSaque == -1)
             {
-                Console.WriteLine("CPF não encontrado/escolha a opção desajada novamente:");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("CPF não encontrado/escolha a opção desejada novamente:");
+                Console.ResetColor();
             }
             else
             {
+                Console.WriteLine();
                 Console.Write("Digite o valor do saque: R$");
                 double valorSaque = int.Parse(Console.ReadLine());
                 saldos[indexParaSaque] -= valorSaque;
 
-
+                Console.WriteLine();
                 Console.WriteLine($"Saque de R$ {valorSaque:F2} feito com sucesso");
+                Console.WriteLine();
                 Console.WriteLine($"CPF = {cpfs[indexParaSaque]} | Titular = {titulares[indexParaSaque]} | Novo Saldo = R${saldos[indexParaSaque]:F2}");
                 Console.WriteLine();
             }
         }
-        
-
-
-
 
         static void Transferencia(List<string> cpfs, List<string> titulares, List<double> saldos)
             {
@@ -166,11 +190,15 @@ namespace ByteBank
 
             if (indexEnviaTransferencia == -1)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("CPF não encontrado/escolha a opção desajada novamente:");
+                Console.ResetColor();
             }
             else if (indexEnviaTransferencia == -1)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("CPF não encontrado/escolha a opção desajada novamente:");
+                Console.ResetColor();
             }
             else
             {
@@ -218,7 +246,9 @@ namespace ByteBank
                 switch (opcao)
                 {
                     case 0:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Finalizando programa...");
+                        Console.ResetColor();
                         break;
                     case 1:
                         RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
@@ -245,16 +275,24 @@ namespace ByteBank
                             switch (opcaoSubMenu)
                             {
                                 case 1:
+                                    Console.ForegroundColor = ConsoleColor.Blue;
                                     Deposito(cpfs, titulares, saldos);
+                                    Console.ResetColor();
                                     break;
                                 case 2:
+                                    Console.ForegroundColor = ConsoleColor.Blue;
                                     Saque(cpfs, titulares, saldos);
+                                    Console.ResetColor();
                                     break;
                                 case 3:
+                                    Console.ForegroundColor = ConsoleColor.Blue; 
                                     Transferencia(cpfs, titulares, saldos);
+                                    Console.ResetColor();
                                     break;
                                 case 4:
+                                    Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Finalizando o programa");
+                                    Console.ResetColor();
                                     return;
                             }
                         } while (opcaoSubMenu != 0);
